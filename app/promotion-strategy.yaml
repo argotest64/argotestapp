@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: promotion-strategy
+  namespace: argocd
+spec:
+  ignoreDifferences:
+  - group: promoter.argoproj.io
+    kind: CommitStatus
+    jsonPointers:
+    - /spec/sha
+    - /metadata/annotations/hcapActive
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: promotion-app
+    repoURL: git@github.com:argotest64/argotestapp.git
+    targetRevision: HEAD

@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: e2e-staging
+  namespace: argocd
+  labels:
+    app: demo
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  sourceHydrator:
+    drySource:
+      path: helm-guestbook-stg
+      repoURL: git@github.com:argotest64/argotestapp.git
+      targetRevision: HEAD
+    hydrateTo:
+      targetBranch: environments/staging-next
+    syncSource:
+      path: e2e
+      targetBranch: environments/staging
+  syncPolicy:
+    automated: {}

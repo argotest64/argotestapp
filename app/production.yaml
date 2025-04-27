@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-app
+  name: production
   namespace: argocd
   labels:
     app: demo
@@ -11,11 +11,13 @@ spec:
   project: default
   sourceHydrator:
     drySource:
+      path: env/helm-guestbook-prod
       repoURL: git@github.com:argotest64/argotestapp.git
-      path: env/helm-guestbook-app
       targetRevision: HEAD
     hydrateTo:
-      targetBranch: environments/dev-next
+      targetBranch: environments/production-next
     syncSource:
-      targetBranch: environments/dev
-      path: helm-guestbook
+      path: us-east-2
+      targetBranch: environments/production
+  syncPolicy:
+    automated: {}

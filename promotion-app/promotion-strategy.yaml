@@ -1,0 +1,18 @@
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: PromotionStrategy
+metadata:
+  annotations:
+  name: argocon-demo
+  namespace: default
+spec:
+  activeCommitStatuses:
+  - key: argocd-health
+  environments:
+  - branch: environments/development
+    autoMerge: true
+  - branch: environments/staging
+  - branch: environments/production
+    proposedCommitStatuses:
+    - key: hcap
+  gitRepositoryRef:
+    name: argocon-demo

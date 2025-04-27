@@ -1,0 +1,13 @@
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: GitRepository
+metadata:
+  labels:
+    app.kubernetes.io/name: promoter
+  name: argocon-demo
+  namespace: default
+spec:
+  github:
+    name: argotestapp
+    owner: argotest64
+  scmProviderRef:
+    name: scmprovider-sample
