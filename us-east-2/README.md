@@ -7,6 +7,6 @@ To hydrate the manifests in this repository, run the following commands:
 
 git clone git@github.com:argotest64/argotestapp.git
 # cd into the cloned directory
-git checkout 44684920311ddc3d59fe4a5413b85821880d6dfa
+git checkout 1c893124b8165b767021acbddc6cc688db4dac04
 helm template . --name-template production --include-crds
 ```
