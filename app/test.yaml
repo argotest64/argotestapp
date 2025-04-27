@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app
+  namespace: argocd
+  labels:
+    app: demo
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  sourceHydrator:
+    drySource:
+      repoURL: git@github.com:argotest64/argotestapp.git
+      path: env/helm-guestbook-app
+      targetRevision: HEAD
+    hydrateTo:
+      targetBranch: environments/dev-next
+    syncSource:
+      targetBranch: environments/dev
+      path: helm-guestbook
