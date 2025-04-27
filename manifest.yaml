@@ -52,7 +52,7 @@ metadata:
   name: development-helm-guestbook
   namespace: helm-guestbook
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/instance: development
