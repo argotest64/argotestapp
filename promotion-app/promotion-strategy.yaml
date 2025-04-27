@@ -10,6 +10,8 @@ spec:
   environments:
   - branch: environments/development
     autoMerge: true
+    activeCommitStatuses:
+    - key: unittest
   - branch: environments/staging
   - branch: environments/production
     proposedCommitStatuses:
