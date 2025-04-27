@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app.kubernetes.io/instance: development
+  name: helm-guestbook
+---
+apiVersion: v1
+automountServiceAccountToken: true
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/instance: development
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: helm-guestbook
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: helm-guestbook-0.1.0
+  name: development-helm-guestbook
+  namespace: helm-guestbook
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: development
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: helm-guestbook
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: helm-guestbook-0.1.0
+  name: development-helm-guestbook
+  namespace: helm-guestbook
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/instance: development
+    app.kubernetes.io/name: helm-guestbook
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: development
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: helm-guestbook
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: helm-guestbook-0.1.0
+  name: development-helm-guestbook
+  namespace: helm-guestbook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: development
+      app.kubernetes.io/name: helm-guestbook
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: development
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: helm-guestbook
+        app.kubernetes.io/version: 1.16.0
+        helm.sh/chart: helm-guestbook-0.1.0
+    spec:
+      containers:
+        - image: nginx:1.16.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          name: helm-guestbook
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      serviceAccountName: development-helm-guestbook
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    helm.sh/hook: test
+  labels:
+    app.kubernetes.io/instance: development
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: helm-guestbook
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: helm-guestbook-0.1.0
+  name: development-helm-guestbook-test-connection
+spec:
+  containers:
+    - args:
+        - development-helm-guestbook:8080
+      command:
+        - wget
+      image: busybox
+      name: wget
+  restartPolicy: Never
