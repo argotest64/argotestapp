@@ -84,6 +84,27 @@ spec:
               port: http
       serviceAccountName: development-helm-guestbook
 ---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+  generateName: app-slack-notification-
+  labels:
+    app.kubernetes.io/instance: development
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      containers:
+        - command:
+            - sleep
+            - "600"
+          image: alpine:latest
+          name: slack-notification
+      restartPolicy: Never
+---
 apiVersion: v1
 kind: Pod
 metadata:
