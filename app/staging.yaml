@@ -11,7 +11,7 @@ spec:
   project: default
   sourceHydrator:
     drySource:
-      path: helm-guestbook-stg
+      path: env/helm-guestbook-stg
       repoURL: git@github.com:argotest64/argotestapp.git
       targetRevision: HEAD
     hydrateTo:
