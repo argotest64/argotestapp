@@ -1,16 +1,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: development:/Namespace:/helm-guestbook
+  labels:
+    app.kubernetes.io/instance: development
   name: helm-guestbook
 ---
 apiVersion: v1
 automountServiceAccountToken: true
 kind: ServiceAccount
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: development:/ServiceAccount:helm-guestbook/development-helm-guestbook
   labels:
     app.kubernetes.io/instance: development
     app.kubernetes.io/managed-by: Helm
@@ -23,8 +21,6 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: development:/Service:helm-guestbook/development-helm-guestbook
   labels:
     app.kubernetes.io/instance: development
     app.kubernetes.io/managed-by: Helm
@@ -47,8 +43,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: development:apps/Deployment:helm-guestbook/development-helm-guestbook
   labels:
     app.kubernetes.io/instance: development
     app.kubernetes.io/managed-by: Helm
@@ -96,8 +90,9 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
-    argocd.argoproj.io/tracking-id: development:batch/Job:helm-guestbook/
   generateName: app-slack-notification-
+  labels:
+    app.kubernetes.io/instance: development
   namespace: helm-guestbook
 spec:
   backoffLimit: 2
@@ -115,7 +110,6 @@ apiVersion: v1
 kind: Pod
 metadata:
   annotations:
-    argocd.argoproj.io/tracking-id: development:/Pod:/development-helm-guestbook-test-connection
     helm.sh/hook: test
   labels:
     app.kubernetes.io/instance: development
