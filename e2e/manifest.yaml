@@ -1,14 +1,16 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  labels:
-    app.kubernetes.io/instance: e2e-staging
+  annotations:
+    argocd.argoproj.io/tracking-id: e2e-staging:/Namespace:/helm-guestbook
   name: helm-guestbook
 ---
 apiVersion: v1
 automountServiceAccountToken: true
 kind: ServiceAccount
 metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: e2e-staging:/ServiceAccount:helm-guestbook/e2e-staging-helm-guestbook
   labels:
     app.kubernetes.io/instance: e2e-staging
     app.kubernetes.io/managed-by: Helm
@@ -21,6 +23,8 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: e2e-staging:/Service:helm-guestbook/e2e-staging-helm-guestbook
   labels:
     app.kubernetes.io/instance: e2e-staging
     app.kubernetes.io/managed-by: Helm
@@ -43,6 +47,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: e2e-staging:apps/Deployment:helm-guestbook/e2e-staging-helm-guestbook
   labels:
     app.kubernetes.io/instance: e2e-staging
     app.kubernetes.io/managed-by: Helm
@@ -88,6 +94,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   annotations:
+    argocd.argoproj.io/tracking-id: e2e-staging:/Pod:/e2e-staging-helm-guestbook-test-connection
     helm.sh/hook: test
   labels:
     app.kubernetes.io/instance: e2e-staging
