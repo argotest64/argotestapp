@@ -1,16 +1,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: production:/Namespace:/helm-guestbook
+  labels:
+    app.kubernetes.io/instance: production
   name: helm-guestbook
 ---
 apiVersion: v1
 automountServiceAccountToken: true
 kind: ServiceAccount
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: production:/ServiceAccount:helm-guestbook/production-helm-guestbook
   labels:
     app.kubernetes.io/instance: production
     app.kubernetes.io/managed-by: Helm
@@ -23,8 +21,6 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: production:/Service:helm-guestbook/production-helm-guestbook
   labels:
     app.kubernetes.io/instance: production
     app.kubernetes.io/managed-by: Helm
@@ -47,8 +43,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: production:apps/Deployment:helm-guestbook/production-helm-guestbook
   labels:
     app.kubernetes.io/instance: production
     app.kubernetes.io/managed-by: Helm
@@ -94,7 +88,6 @@ apiVersion: v1
 kind: Pod
 metadata:
   annotations:
-    argocd.argoproj.io/tracking-id: production:/Pod:/production-helm-guestbook-test-connection
     helm.sh/hook: test
   labels:
     app.kubernetes.io/instance: production
