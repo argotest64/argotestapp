@@ -58,7 +58,7 @@ metadata:
   name: e2e-staging-helm-guestbook
   namespace: helm-guestbook
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/instance: e2e-staging
